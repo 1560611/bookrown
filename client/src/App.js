@@ -7,10 +7,12 @@ import LoginPage from './components/pages/LoginPage'
 
 const App = () => (
     <div className="App">
-        <h1>Bookworm!</h1>
-        <div>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/login" exact component={LoginPage} />
+        <div className="container ui">
+            <h1>Bookworm!</h1>
+            <div>
+                <Route path="/" exact component={HomePage} />
+                <Route path="/login" exact component={LoginPage} />
+            </div>
         </div>
     </div>
 )
