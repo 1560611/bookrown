@@ -4,4 +4,4 @@ const ErrorHandle = (req, res) => {
     )
 }
 
-module.exports = ErrorHandle
+export default ErrorHandle

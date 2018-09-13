@@ -1,6 +1,7 @@
-const Router = require('express').Router()
-const User = require('./../data/models/user.model')
-const ErrorHandle = require('./errorHandle')
+import express from 'express'
+const Router = express.Router()
+import User from './../data/models/user.model'
+import ErrorHandle from './errorHandle'
 
 Router
     .route('/login')
@@ -42,4 +43,5 @@ Router
         ErrorHandle
     )
 
-module.exports = Router
+// module.exports = Router
+export default Router
