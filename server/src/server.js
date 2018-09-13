@@ -20,7 +20,12 @@ mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
 const PORT = process.env.PORT || 5000
 
 // Use Routes
+const path = require('path')
 app.use('/api/auth', require('./routes/auth'))
+
+app.use('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'index.html'))
+})
 
 // Launch server
 app.listen(PORT, (err) => {

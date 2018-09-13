@@ -5,15 +5,23 @@ const ErrorHandle = require('./errorHandle')
 Router
     .route('/login')
     .post(
-        async (req, res, next) => {
-            try {
-                let user = User.find()
-                res.json(user)
-            } catch (err) {
-                // @ts-ignore
-                req.errors = err
-                next()
-            }
+        // async (req, res, next) => {
+        //     try {
+        //         let user = User.find()
+        //         res.json(user)
+        //     } catch (err) {
+        //         // @ts-ignore
+        //         req.errors = err
+        //         next()
+        //     }
+        // },
+        (req, res) => {
+            res.status(404).json({
+                errors: {
+                    global:
+                        "Invalid credentials"
+                }
+            })
         },
         ErrorHandle
     )
