@@ -8,6 +8,5 @@ export const userLoggedInAction = user => {
     }
 }
 
-export const userLogginAction = data => async (dispatch) => {
-    
-}
+export const loginAction = credentials => dispatch =>
+    loginAPI(credentials).then(user => dispatch(userLoggedInAction(user)))

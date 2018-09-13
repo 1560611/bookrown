@@ -5,6 +5,11 @@ const app = express()
 // Dotenv
 require('dotenv').config()
 
+// Body parser
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 // Database
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
