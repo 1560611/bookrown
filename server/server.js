@@ -14,6 +14,9 @@ mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
 // PORT
 const PORT = process.env.PORT || 5000
 
+// Use Routes
+app.use('/api/auth', require('./routes/auth'))
+
 // Launch server
 app.listen(PORT, (err) => {
     if (err) {
