@@ -8,13 +8,11 @@ require('dotenv').config()
 import 'dotenv'
 
 // Body parser
-// const bodyParser = require('body-parser')
 import bodyParser from 'body-parser'
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // Database
-// const mongoose = require('mongoose')
 import mongoose from 'mongoose'
 mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
     .then(() => console.log("DB is connected"))
@@ -24,7 +22,6 @@ mongoose.connect(process.env.MLAB_URL, { useNewUrlParser: true })
 const PORT = process.env.PORT || 5000
 
 // Use Routes
-// const path = require('path')
 import path from 'path'
 import AuthRoute from './routes/auth'
 app.use('/api/auth', AuthRoute)

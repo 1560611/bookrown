@@ -9,6 +9,13 @@ import { BrowserRouter } from 'react-router-dom'
 // Redux
 import store from './store'
 import { Provider } from 'react-redux'
+import { userLoggedInAction } from './actions/authAction'
+
+if (localStorage.bookwormJWT) {
+    store.dispatch(userLoggedInAction({
+        token: localStorage.bookwormJWT
+    }))
+}
 
 ReactDOM.render(
     <BrowserRouter>
