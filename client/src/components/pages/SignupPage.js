@@ -9,14 +9,15 @@ import { signupAction } from './../../actions/authAction'
 import { connect } from 'react-redux'
 
 class SignupPage extends React.Component {
-    submit = data => {
+    submit = data =>
         this.props.signupAction(data)
             .then(() => this.props.history.push('/dashboard'))
-    }
+
 
     render() {
         return (
             <div className="SignupPage">
+                <h1>Signup Page</h1>
                 <SignupForm submit={this.submit} />
             </div>
         )

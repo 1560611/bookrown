@@ -15,20 +15,20 @@ export const userLoggedOutAction = () => {
 }
 
 export const loginAction = credentials => dispatch =>
-    loginAPI(credentials).then(user => {
-        localStorage.setItem('bookwormJWT', user.token)
-        dispatch(userLoggedInAction(user))
-    })
+    loginAPI(credentials)
+        .then(user => {
+            localStorage.setItem('bookwormJWT', user.token)
+            dispatch(userLoggedInAction(user))
+        })
 
 export const logoutAction = () => dispatch => {
     localStorage.removeItem('bookwormJWT')
     dispatch(userLoggedOutAction())
 }
 
-export const signupAction = data => dispach => {
+export const signupAction = data => dispach =>
     signupAPI(data)
         .then(user => {
             localStorage.setItem('bookwormJWT', user.token)
             dispach(userLoggedInAction(user))
         })
-}

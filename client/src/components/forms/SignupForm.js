@@ -17,17 +17,21 @@ class SignupForm extends React.Component {
     }
     handleChange = e =>
         this.setState({
+            ...this.state,
             data: { ...this.state.data, [e.target.name]: e.target.value }
         })
-    handleSubmit = () => {
+    handleSubmit = e => {
+        e.preventDefault()
+
         const errors = this.validate(this.state.data)
         this.setState({ errors })
 
         if (Object.keys(errors).length === 0) {
             this.setState({ loading: true })
-            this.props.submit(this.state.data)
+            this.props
+                .submit(this.state.data)
                 .catch(err => this.setState({
-                    errors: err.respone.data.errors,
+                    errors: err.response.data.errors,
                     loading: false
                 }))
         }
@@ -42,7 +46,6 @@ class SignupForm extends React.Component {
         const { errors, loading } = this.state
         return (
             <div className="SignupForm">
-                <h1>Signup Form</h1>
                 <Form onSubmit={this.handleSubmit} loading={loading}>
                     <Form.Field error={!!errors.email}>
                         <label htmlFor="email">Email</label>

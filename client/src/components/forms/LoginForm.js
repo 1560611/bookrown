@@ -20,6 +20,7 @@ class LoginForm extends React.Component {
         data: { ...this.state.data, [e.target.name]: e.target.value }
     })
     handleSubmit = e => {
+        e.preventDefault()
 
         const errors = this.validate(this.state.data)
         this.setState({ errors })

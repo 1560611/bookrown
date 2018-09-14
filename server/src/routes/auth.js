@@ -2,6 +2,7 @@ import express from 'express'
 const Router = express.Router()
 import User from './../data/models/user.model'
 import ErrorHandle from './errorHandle'
+import parseErrors from './../utils/parseErrors'
 
 Router
     .route('/login')
@@ -24,18 +25,24 @@ Router
         },
         ErrorHandle
     )
-
 Router
-    .route('/')
-    .get(
+    .route('/signup')
+    .post(
         async (req, res, next) => {
             try {
-                let user = await User.find()
-                res.json(user)
+                const { email, password } = req.body
+                const user = new User({ email })
+                user.setPassword(password)
+                const result = await user.save()
+                res.json({
+                    user: user.toAuthJSON()
+                    // user: "here"
+                })
             } catch (err) {
                 // @ts-ignore
-                req.errors = err
-                next()
+                res.status(404).json({
+                    errors: parseErrors(err.errors)
+                })
             }
         },
         ErrorHandle
