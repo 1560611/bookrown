@@ -1,4 +1,4 @@
-import { loginAPI } from './../api/auth'
+import { loginAPI, signupAPI } from './../api/auth'
 import { USER_LOGGED_IN, USER_LOGGED_OUT } from './../constant/types'
 
 export const userLoggedInAction = user => {
@@ -23,4 +23,12 @@ export const loginAction = credentials => dispatch =>
 export const logoutAction = () => dispatch => {
     localStorage.removeItem('bookwormJWT')
     dispatch(userLoggedOutAction())
+}
+
+export const signupAction = data => dispach => {
+    signupAPI(data)
+        .then(user => {
+            localStorage.setItem('bookwormJWT', user.token)
+            dispach(userLoggedInAction(user))
+        })
 }

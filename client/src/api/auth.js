@@ -5,3 +5,7 @@ export const loginAPI = credentials =>
         .then(response => {
             return response.data.user
         })
+
+export const signupAPI = user =>
+    axios.post('/api/auth/signup', user)
+        .then(resposne => resposne.data.user)
