@@ -3,6 +3,7 @@ const Router = express.Router()
 import User from './../data/models/user.model'
 import ErrorHandle from './errorHandle'
 import parseErrors from './../utils/parseErrors'
+import sendConfirmationEmail from './../mailer/mailer'
 
 Router
     .route('/login')
@@ -13,7 +14,6 @@ Router
             if (user && user.isValidPassword(password)) {
                 res.json({
                     user: user.toAuthJSON()
-                    // user: "here"
                 })
             } else {
                 res.status(404).json({
@@ -25,6 +25,7 @@ Router
         },
         ErrorHandle
     )
+
 Router
     .route('/signup')
     .post(
@@ -33,10 +34,11 @@ Router
                 const { email, password } = req.body
                 const user = new User({ email })
                 user.setPassword(password)
+                user.setConfirmationToken()
                 const result = await user.save()
+                sendConfirmationEmail(result)
                 res.json({
-                    user: user.toAuthJSON()
-                    // user: "here"
+                    user: result.toAuthJSON()
                 })
             } catch (err) {
                 // @ts-ignore
@@ -46,6 +48,22 @@ Router
             }
         },
         ErrorHandle
+    )
+
+Router
+    .route('/confirmation')
+    .post(
+        async (req, res) => {
+            const token = req.body
+            let user = await User.findOneAndUpdate(
+                { confirmationToken: token },
+                { confirmationToken: "", confirmed: true },
+                { new: true }
+            )
+            user ? res.json({ user: user.toAuthJSON() })
+                :
+                res.status(404).json({})
+        }
     )
 
 // module.exports = Router

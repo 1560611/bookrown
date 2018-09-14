@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import "semantic-ui-css/semantic.min.css";
+import decode from 'jwt-decode'
 
 import { BrowserRouter, Route } from 'react-router-dom'
 
@@ -12,8 +13,11 @@ import { Provider } from 'react-redux'
 import { userLoggedInAction } from './actions/authAction'
 
 if (localStorage.bookwormJWT) {
+    const payload = decode(localStorage.bookwormJWT)
     store.dispatch(userLoggedInAction({
-        token: localStorage.bookwormJWT
+        token: localStorage.bookwormJWT,
+        email: payload.email,
+        confirmed: payload.confirmed
     }))
 }
 
